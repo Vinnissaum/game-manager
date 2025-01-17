@@ -4,6 +4,9 @@ import com.ericsson.game_manager.domain.validation.Error;
 import com.ericsson.game_manager.domain.validation.ValidationHandler;
 import com.ericsson.game_manager.domain.validation.Validator;
 
+import java.time.LocalDate;
+import java.util.Map;
+
 public class GameValidator extends Validator {
 
     private final Game game;
@@ -23,7 +26,9 @@ public class GameValidator extends Validator {
             this.validationHandler().append(new Error("'publisher' should be specified")); //
             return;
         }
+
         checkNameConstraints();
+        validateTimePlayed();
     }
 
     private void checkNameConstraints() {
@@ -42,5 +47,20 @@ public class GameValidator extends Validator {
         if (length < NAME_MIN_LENGTH || length > NAME_MAX_LENGTH) {
             this.validationHandler().append(new Error("'name' must be between 3 and 20 characters"));
         }
+    }
+
+    private void validateTimePlayed() {
+        Map<LocalDate, Integer> timePlayed = this.game.getTimePlayed();
+
+        if (timePlayed == null) {
+            this.validationHandler().append(new Error("'TimePlayed' should not be null"));
+            return;
+        }
+
+        timePlayed.forEach((key, value) -> {
+            if (value == null || value == 0) {
+                this.validationHandler().append(new Error("'Hours of TimePlayed' should be specified"));
+            }
+        });
     }
 }
