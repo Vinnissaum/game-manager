@@ -14,8 +14,16 @@ public class Publisher extends AggregateRoot<PublisherID> {
         this.name = name;
     }
 
+    private Publisher(final PublisherID id) {
+        super(id);
+    }
+
     public static Publisher with(final PublisherID id, final String name) {
         return new Publisher(id, name);
+    }
+
+    public static Publisher with(final PublisherID id) {
+        return new Publisher(id);
     }
 
     public String getName() {

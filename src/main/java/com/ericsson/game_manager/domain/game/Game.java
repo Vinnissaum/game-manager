@@ -42,6 +42,15 @@ public class Game extends AggregateRoot<GameID> {
         );
     }
 
+    public static Game with(
+            final GameID gameID,
+            final Publisher publisher,
+            final String name,
+            final Map<LocalDate, Integer> timePlayed
+    ) {
+        return new Game(gameID, publisher, name, timePlayed);
+    }
+
     public Publisher getPublisher() {
         return publisher;
     }
