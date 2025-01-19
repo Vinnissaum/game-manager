@@ -1,7 +1,6 @@
 package com.ericsson.game_manager.infrastructure.game;
 
 import com.ericsson.game_manager.domain.game.Game;
-import com.ericsson.game_manager.domain.game.GameGateway;
 import com.ericsson.game_manager.domain.game.GameID;
 import com.ericsson.game_manager.domain.publisher.Publisher;
 import com.ericsson.game_manager.domain.publisher.PublisherID;
@@ -20,7 +19,7 @@ import java.util.Map;
 public class GameMySQLGatewayTest {
 
     @Autowired
-    private GameGateway gameGateway;
+    private GameMySQLGateway gameGateway;
 
     @Autowired
     private GameRepository gameRepository;
