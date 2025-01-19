@@ -18,7 +18,10 @@ import java.util.Collection;
 @Inherited
 @ActiveProfiles("test")
 @DataJpaTest
-@ComponentScan(includeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")})
+@ComponentScan(
+        basePackages = "com.ericsson.game_manager",
+        useDefaultFilters = false,
+        includeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")})
 @ExtendWith(MySQLGatewayTest.CleanUpExtension.class)
 public @interface MySQLGatewayTest {
 
