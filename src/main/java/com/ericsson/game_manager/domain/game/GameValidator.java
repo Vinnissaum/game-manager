@@ -9,11 +9,9 @@ import java.util.Map;
 
 public class GameValidator extends Validator {
 
-    private final Game game;
-
     private static final int NAME_MAX_LENGTH = 20;
-
     private static final int NAME_MIN_LENGTH = 3;
+    private final Game game;
 
     public GameValidator(final Game game, final ValidationHandler handler) {
         super(handler);
@@ -22,13 +20,23 @@ public class GameValidator extends Validator {
 
     @Override
     public void validate() {
-        if (this.game.getPublisher() == null) { //
-            this.validationHandler().append(new Error("'publisher' should be specified")); //
+        checkNameConstraints();
+        validatePublisher();
+        validateTimePlayed();
+    }
+
+    private void validatePublisher() {
+        final Error error = new Error("'publisher' should be specified");
+
+        if (this.game.getPublisher() == null) {
+            this.validationHandler().append(error);
             return;
         }
 
-        checkNameConstraints();
-        validateTimePlayed();
+        final String publisherId = this.game.getPublisher().getId().getValue();
+        if (publisherId == null || publisherId.trim().isBlank()) {
+            this.validationHandler().append(error);
+        }
     }
 
     private void checkNameConstraints() {

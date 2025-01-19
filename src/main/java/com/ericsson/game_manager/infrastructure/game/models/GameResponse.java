@@ -1,6 +1,5 @@
-package com.ericsson.game_manager.infrastructure.game.testezada;
+package com.ericsson.game_manager.infrastructure.game.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
@@ -12,7 +11,4 @@ public record GameResponse(
         @JsonProperty("name") String name,
         @JsonProperty("timePlayed") Map<LocalDate, Integer> timePlayed
 ) {
-    @JsonCreator
-    public GameResponse {
-    }
 }

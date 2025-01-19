@@ -22,7 +22,7 @@ public class GameJpaEntity {
     @Column(name = "name", nullable = false, length = 20)
     private String name;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "time_played", //
             joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id") //
     )
