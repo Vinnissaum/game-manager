@@ -1,6 +1,5 @@
-package com.ericsson.game_manager.application.game.list;
+package com.ericsson.game_manager.application.usecase.game.list;
 
-import com.ericsson.game_manager.domain.exceptions.DomainException;
 import com.ericsson.game_manager.domain.game.Game;
 import com.ericsson.game_manager.domain.game.GameGateway;
 import com.ericsson.game_manager.domain.publisher.Publisher;

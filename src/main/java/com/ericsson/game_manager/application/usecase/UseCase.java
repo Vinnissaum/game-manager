@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application;
+package com.ericsson.game_manager.application.usecase;
 
 public abstract class UseCase<IN, OUT> {
 

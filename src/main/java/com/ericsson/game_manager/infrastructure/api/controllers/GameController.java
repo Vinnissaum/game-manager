@@ -1,18 +1,17 @@
 package com.ericsson.game_manager.infrastructure.api.controllers;
 
-import com.ericsson.game_manager.application.game.create.CreateGameCommand;
-import com.ericsson.game_manager.application.game.create.CreateGameOutput;
-import com.ericsson.game_manager.application.game.create.CreateGameUseCase;
-import com.ericsson.game_manager.application.game.findById.FindGameByIdUseCase;
-import com.ericsson.game_manager.application.game.findByPublisherId.FindByPublisherIdUseCase;
-import com.ericsson.game_manager.application.game.list.ListGamesUseCase;
+import com.ericsson.game_manager.application.usecase.game.create.CreateGameCommand;
+import com.ericsson.game_manager.application.usecase.game.create.CreateGameOutput;
+import com.ericsson.game_manager.application.usecase.game.create.CreateGameUseCase;
+import com.ericsson.game_manager.application.usecase.game.findById.FindGameByIdUseCase;
+import com.ericsson.game_manager.application.usecase.game.findByPublisherId.FindByPublisherIdUseCase;
+import com.ericsson.game_manager.application.usecase.game.list.ListGamesUseCase;
 import com.ericsson.game_manager.domain.publisher.Publisher;
 import com.ericsson.game_manager.domain.publisher.PublisherID;
 import com.ericsson.game_manager.infrastructure.api.GameAPI;
 import com.ericsson.game_manager.infrastructure.game.models.CreateGameRequest;
 import com.ericsson.game_manager.infrastructure.game.models.GameResponse;
 import com.ericsson.game_manager.infrastructure.game.presenters.GameApiPresenter;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;

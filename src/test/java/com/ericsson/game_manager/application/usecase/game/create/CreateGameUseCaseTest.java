@@ -1,5 +1,6 @@
-package com.ericsson.game_manager.application.game.create;
+package com.ericsson.game_manager.application.usecase.game.create;
 
+import com.ericsson.game_manager.application.service.PublisherValidationService;
 import com.ericsson.game_manager.domain.exceptions.DomainException;
 import com.ericsson.game_manager.domain.game.GameGateway;
 import com.ericsson.game_manager.domain.publisher.Publisher;
@@ -32,6 +33,9 @@ public class CreateGameUseCaseTest {
     @Mock
     private GameGateway gameGateway;
 
+    @Mock
+    private PublisherValidationService publisherValidationService;
+
     @BeforeEach
     void cleanUp() {
         Mockito.reset(gameGateway);
@@ -46,6 +50,8 @@ public class CreateGameUseCaseTest {
 
         final var aCommand = CreateGameCommand.with(name, publisher, timePlayed);
 
+        when(publisherValidationService.isPublisherRegistered(any())).thenReturn(true);
+
         when(gameGateway.create(any())) //
                 .thenAnswer(returnsFirstArg());
 
@@ -59,6 +65,27 @@ public class CreateGameUseCaseTest {
                         && Objects.equals(publisher, game.getPublisher()) //
                         && Objects.nonNull(game.getTimePlayed())) //
                 );
+        Mockito.verify(publisherValidationService, times(1)).isPublisherRegistered(any());
+    }
+
+    @Test
+    public void givenAValidCommandAndPublisherNotRegistered_whenCallUseCase_shouldReturnAnException() {
+        final String name = "Super Mario Bros";
+        final Publisher publisher = Publisher.with(PublisherID.from("nintendo"), "Nintendo Co., Ltd.");
+        final String expectedErrorMessage = "Publisher 'nintendo' is not registered in publisher manager";
+
+        final Map<LocalDate, Integer> timePlayed = Map.ofEntries(Map.entry(LocalDate.of(2025, 1, 7), 4), Map.entry(LocalDate.of(2024, 12, 27), 2));
+
+        final var aCommand = CreateGameCommand.with(name, publisher, timePlayed);
+
+        when(publisherValidationService.isPublisherRegistered(any())).thenReturn(false);
+
+        DomainException exception = Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
+
+        Assertions.assertInstanceOf(DomainException.class, exception);
+        Assertions.assertEquals(expectedErrorMessage, exception.getErrors().getFirst().message());
+        Mockito.verify(gameGateway, times(0)).create(any());
+        Mockito.verify(publisherValidationService, times(1)).isPublisherRegistered(any());
     }
 
     @Test
@@ -72,16 +99,19 @@ public class CreateGameUseCaseTest {
 
         final var aCommand = CreateGameCommand.with(name, publisher, timePlayed);
 
+        when(publisherValidationService.isPublisherRegistered(any())).thenReturn(true);
+
         final var actualOutput = Assertions.assertThrows(DomainException.class, () -> useCase.execute(aCommand));
 
         Assertions.assertEquals(expectedErrorCount, actualOutput.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, actualOutput.getErrors().getFirst().message());
 
+        Mockito.verify(publisherValidationService, times(1)).isPublisherRegistered(any());
         Mockito.verify(gameGateway, times(0)).create(any());
     }
 
     @Test
-    public void givenAnInvalidCommand_whenGatewayThrowsRandomException_shouldThrowsDomainException() {
+    public void givenAValidCommand_whenGatewayThrowsRandomException_shouldThrowsDomainException() {
         final String name = "Super Mario Bros";
         final Publisher publisher = Publisher.with(PublisherID.from("nintendo"), "Nintendo Co., Ltd.");
         final var expectedErrorMessage = "Random error";
@@ -89,6 +119,8 @@ public class CreateGameUseCaseTest {
         final Map<LocalDate, Integer> timePlayed = Map.ofEntries(Map.entry(LocalDate.of(2025, 1, 7), 4), Map.entry(LocalDate.of(2024, 12, 27), 2));
 
         final var aCommand = CreateGameCommand.with(name, publisher, timePlayed);
+
+        when(publisherValidationService.isPublisherRegistered(any())).thenReturn(true);
 
         when(gameGateway.create(any())) //
                 .thenThrow(new IllegalStateException(expectedErrorMessage));
@@ -99,6 +131,30 @@ public class CreateGameUseCaseTest {
 
         Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
 
+        Mockito.verify(publisherValidationService, times(1)).isPublisherRegistered(any());
         Mockito.verify(gameGateway, times(1)).create(any());
+    }
+
+    @Test
+    public void givenAValidCommand_whenPublisherValidationServiceThrowsRandomException_shouldThrowsDomainException() {
+        final String name = "Super Mario Bros";
+        final Publisher publisher = Publisher.with(PublisherID.from("nintendo"), "Nintendo Co., Ltd.");
+        final var expectedErrorMessage = "Random error";
+
+        final Map<LocalDate, Integer> timePlayed = Map.ofEntries(Map.entry(LocalDate.of(2025, 1, 7), 4), Map.entry(LocalDate.of(2024, 12, 27), 2));
+
+        final var aCommand = CreateGameCommand.with(name, publisher, timePlayed);
+
+        when(publisherValidationService.isPublisherRegistered(any())) //
+                .thenThrow(new IllegalStateException(expectedErrorMessage));
+
+        IllegalStateException exception = Assertions.assertThrows( //
+                IllegalStateException.class, () -> useCase.execute(aCommand) //
+        );
+
+        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
+
+        Mockito.verify(publisherValidationService, times(1)).isPublisherRegistered(any());
+        Mockito.verify(gameGateway, times(0)).create(any());
     }
 }

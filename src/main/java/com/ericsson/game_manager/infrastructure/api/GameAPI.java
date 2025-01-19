@@ -1,6 +1,6 @@
 package com.ericsson.game_manager.infrastructure.api;
 
-import com.ericsson.game_manager.application.game.create.CreateGameOutput;
+import com.ericsson.game_manager.application.usecase.game.create.CreateGameOutput;
 import com.ericsson.game_manager.infrastructure.game.models.CreateGameRequest;
 import com.ericsson.game_manager.infrastructure.game.models.GameResponse;
 import org.springframework.http.MediaType;

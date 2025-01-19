@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application.game.findByPublisherId;
+package com.ericsson.game_manager.application.usecase.game.findByPublisherId;
 
 import com.ericsson.game_manager.domain.game.Game;
 import com.ericsson.game_manager.domain.game.GameGateway;

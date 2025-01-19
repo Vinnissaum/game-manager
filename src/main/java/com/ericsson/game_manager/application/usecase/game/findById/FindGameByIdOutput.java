@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application.game.findById;
+package com.ericsson.game_manager.application.usecase.game.findById;
 
 import com.ericsson.game_manager.domain.game.Game;
 import com.ericsson.game_manager.domain.game.GameID;

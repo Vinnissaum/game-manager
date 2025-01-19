@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application.game.findById;
+package com.ericsson.game_manager.application.usecase.game.findById;
 
 import com.ericsson.game_manager.domain.exceptions.DomainException;
 import com.ericsson.game_manager.domain.game.GameGateway;

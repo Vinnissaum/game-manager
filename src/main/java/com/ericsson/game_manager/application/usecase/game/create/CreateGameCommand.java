@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application.game.create;
+package com.ericsson.game_manager.application.usecase.game.create;
 
 import com.ericsson.game_manager.domain.publisher.Publisher;
 

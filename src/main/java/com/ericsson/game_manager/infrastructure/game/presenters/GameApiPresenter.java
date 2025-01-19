@@ -1,8 +1,8 @@
 package com.ericsson.game_manager.infrastructure.game.presenters;
 
-import com.ericsson.game_manager.application.game.findById.FindGameByIdOutput;
-import com.ericsson.game_manager.application.game.findByPublisherId.FindByPublisherIdOutput;
-import com.ericsson.game_manager.application.game.list.ListGamesOutput;
+import com.ericsson.game_manager.application.usecase.game.findById.FindGameByIdOutput;
+import com.ericsson.game_manager.application.usecase.game.findByPublisherId.FindByPublisherIdOutput;
+import com.ericsson.game_manager.application.usecase.game.list.ListGamesOutput;
 import com.ericsson.game_manager.infrastructure.game.models.GameResponse;
 
 public interface GameApiPresenter {

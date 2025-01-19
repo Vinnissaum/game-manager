@@ -1,4 +1,4 @@
-package com.ericsson.game_manager.application.game.list;
+package com.ericsson.game_manager.application.usecase.game.list;
 
 import com.ericsson.game_manager.domain.game.GameGateway;
 

@@ -10,3 +10,7 @@ server:
     threads:
       worker: 10
       io: 2
+
+external:
+  validation:
+    base-url: ${VALIDATION_SERVICE_URL:http://localhost:8080}
