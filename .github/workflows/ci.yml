@@ -31,8 +31,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Set Spring profile to 'dev'
+        run: echo "spring.profiles.active=dev" >> $GITHUB_ENV
+
       - name: Build with Maven
         run: mvn clean install -DskipTests=false
 
-      - name: Run tests
-        run: mvn test
+      - name: Run tests with profile 'dev'
+        run: mvn test -Dspring.profiles.active=dev
