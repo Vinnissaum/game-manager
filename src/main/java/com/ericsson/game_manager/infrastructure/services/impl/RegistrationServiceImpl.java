@@ -27,7 +27,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public void register() {
         final var body = new RegistrationRequest( //
-                environment.getProperty("server.address", "localhost"), //
+                environment.getProperty("server.host", "localhost"), //
                 environment.getProperty("server.port", "8081"));
 
         webClient.post()

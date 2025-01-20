@@ -1,11 +1,13 @@
 mysql:
-  username: root
-  password: root
+  username: ${MYSQL_USERNAME:root}
+  password: ${MYSQL_ROOT_PASSWORD:root}
   schema: bootdb
-  url: localhost:3306
+  host: ${MYSQL_HOST:mysql}
+  port: ${MYSQL_PORT:3306}
 
 server:
-  port: 8081
+  host: ${SERVER_HOST:localhost}
+  port: ${SERVER_PORT:8081}
   undertow:
     threads:
       worker: 10

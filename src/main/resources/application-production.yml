@@ -1,8 +1,9 @@
 mysql:
-  username: ${DATABASE_MYSQL_USERNAME:root}
-  password: ${DATABASE_MYSQL_PASSWORD:root}
+  username: ${MYSQL_USERNAME}
+  password: ${MYSQL_ROOT_PASSWORD}
   schema: bootdb
-  url: ${DATABASE_MYSQL_URL:localhost:3306}
+  host: ${MYSQL_HOST}
+  port: ${MYSQL_PORT:3306}
 
 spring:
   jpa:
