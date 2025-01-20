@@ -1,0 +1,68 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: game-manager-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bootdb
+    ports:
+      - "3306:3306"
+    networks:
+      - inatel
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+  game-manager:
+    build:
+      context: .
+    container_name: game-manager
+    environment:
+      SERVER_HOST: game-manager
+      SERVER_PORT: 8081
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      SPRING_PROFILES_ACTIVE: development
+      VALIDATION_SERVICE_URL: "http://publisher-manager:8080"
+      REGISTRATION_SERVICE_URL: "http://publisher-manager:8080"
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      publisher-manager:
+        condition: service_healthy
+    networks:
+      - inatel
+
+  publisher-manager:
+    image: adautomendes/publisher-manager:latest
+    container_name: publishermanager
+    environment:
+      SERVER_HOST: publisher-manager
+      SERVER_PORT: 8080
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - inatel
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+networks:
+  inatel:
+    driver: bridge
