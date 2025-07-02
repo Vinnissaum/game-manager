@@ -1,11 +1,7 @@
-<center>
-  <p align="center">
-    <img src="https://www.telecomrevieweurope.com/wp-content/uploads/2024/07/Ericsson_Faces_Additional_USD_1_Billion_Impairment_Charge_ion_Vonage_Acquisition_.jpg" />&nbsp;
-  </p>  
+<center> 
   <h1 align="center">🚀 Game Manager</h1>
   <p align="center">
-    Aplicação referente ao teste técnico da Ericsson <br />
-    Utilizando Clean Architecture, DDD e boas práticas
+    Aplicação simples utilizando Clean Architecture, DDD e boas práticas
   </p>
 </center>
 <br />
